@@ -1,4 +1,4 @@
-import { supabase } from "@/utils/supabaseClient";
+// import { supabase } from "@/utils/supabaseClient";
 import { create } from "zustand";
 
 export interface SBDataInterface {
@@ -12,67 +12,34 @@ interface SBsectionStore {
   SBData?: SBDataInterface | null;
   SBsetData: (key: string, data: SBDataInterface) => Promise<void>;
   SBgetData: (key: string) => Promise<SBDataInterface | null>;
+  loading: boolean;
 }
 
 // Create Zustand store
-const useSBSectionStore = create<SBsectionStore>(() => ({
+const useSBSectionStore = create<SBsectionStore>((set) => ({
   SBData: {
     title: "",
     desc: "",
     btn_text: "",
     img_url: "",
   },
+  loading: false,
 
   SBsetData: async (key, data) => {
-    const { error } = await supabase.from(key).update(data).eq("id", 1);
-    if (error) {
-      console.error("Error fetching SBData:", error);
-      // return null;
+    set({ loading: true });
+    if (window.localStorage !== undefined) {
+      localStorage.setItem(key, JSON.stringify(data));
     }
-    // return null;
-    // try {
-    //   const { data: supabaseData, status } = await supabase.post(
-    //     `/rest/v1/${key}`,
-    //     data,
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Prefer: "return=representation",
-    //       },
-    //     }
-    //   );
-
-    //   if (status === 201) {
-    //     set({ SBData: data });
-    //     console.log("Data successfully updated in Supabase", supabaseData);
-    //   }
-    // } catch (error) {
-    //   console.error("Error updating SBData:", error);
-    // }
+    set({ loading: false });
   },
 
   SBgetData: async (key) => {
-    // try {
-    //   const { data, status } = await supabase.get(`/rest/v1/${key}`, {
-    //     params: {
-    //       select: "*",
-    //     },
-    //   });
-
-    //   if (status === 200 && data.length > 0) {
-    //     return data[0] as SBData;
-    //   }
-    // } catch (error) {
-    //   console.error("Error fetching SBData:", error);
-    // }
-    // return null;
-    const { data, error } = await supabase.from(key).select("*");
-    if (error) {
-      console.error("Error fetching SBData:", error);
-      return null;
+    set({ loading: true });
+    if (window.localStorage !== undefined) {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : null;
+      set({ loading: false });
     }
-    console.log(data);
-    return data[0] as SBDataInterface;
   },
 }));
 

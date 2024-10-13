@@ -9,7 +9,7 @@ import useSBSectionStore, { SBDataInterface } from "@/store/supabaseStore";
 
 export default function HeroMainComp() {
   // const { getHeroData } = useSectionStore();
-  const { SBgetData } = useSBSectionStore();
+  const { SBgetData, loading } = useSBSectionStore();
   const [heroData, setHeroData] = useState<SBDataInterface>({
     title: "",
     desc: "",
@@ -45,16 +45,14 @@ export default function HeroMainComp() {
     fetchHeroData();
   }, [SBgetData, modalState]);
 
-  console.log(heroData?.img_url)
   return (
-    <>
-      {/* Hero Section */}
+    <>{loading ?
       <section className="flex min-h-screen w-screen flex-col items-center justify-between overflow-x-hidden relative">
         <div>
           <div
             className="h-screen w-screen bg-cover bg-no-repeat bg-center flex items-center justify-center relative"
-            style={{ backgroundImage: `url(${bgImg})` }}
-          // style={{ backgroundImage: `url(${heroData?.imageUrl ?? '/assets/home-assets/hero1.webp'})` }}
+            // style={{ backgroundImage: `url(${bgImg}) '/assets/home-assets/hero1.webp'` }}
+            style={{ backgroundImage: `url(${bgImg ? bgImg : '/assets/home-assets/hero1.webp'})` }}
           >
 
             {/* <Image
@@ -68,24 +66,26 @@ export default function HeroMainComp() {
 
             <div className="w-[90%] mx-auto lg:w-[50%] flex flex-col gap-10 items-center justify-center text-center px-4 relative z-10">
               <h1 className="text-3xl lg:text-7xl text-white font-bold lg:font-extrabold">
-                {heroData?.title}
+                {heroData?.title ? heroData?.title : "Business Digitization for Productivity"}
               </h1>
               <p className="text-based lg:text-xl text-white font-medium">
-                {heroData?.desc}
+                {heroData?.desc ? heroData?.desc : "Dorcas is Transforming Everyday Businesses into Efficient and Profitable Ventures by Digitizing Operations and Processes."}
               </p>
               <Link
                 href={"/get-started"}
                 className="bg-white text-sky-blue text-sm lg:text-base hover:bg-blue-600 hover:text-white rounded-full px-10 py-3 w-fit"
               >
-                {heroData?.btn_text}
+                {heroData?.btn_text ? heroData?.btn_text : "Get Started"}
               </Link>
             </div>
           </div>
         </div>
         <div className="absolute top-4 right-4 bg-blue-500 py-2 px-5 rounded-lg">
-          <EditHeroComp modalState={modalState} setModalState={setModalState} initValue={heroData} />
+          <EditHeroComp modalState={modalState} setModalState={setModalState} initValue={heroData} imgTag="hero_img" sectionTag="hero_section" title="Edit Hero Section" />
         </div>
       </section>
+      : <div className="min-h-screen w-screen flex items-center justify-center">loading...</div>
+    }
     </>
   );
 }

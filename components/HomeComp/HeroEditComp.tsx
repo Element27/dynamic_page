@@ -15,13 +15,13 @@ import { storeImg } from "@/utils/utils";
 const EditHeroComp = ({
   modalState,
   setModalState,
-  initValue
+  initValue, imgTag, sectionTag, title
 }: {
   modalState: boolean;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
-  initValue: SBDataInterface;
+  initValue: SBDataInterface; imgTag: string, sectionTag: string; title: string
 }) => {
-  const { SBsetData, SBgetData } = useSBSectionStore();
+  const { SBsetData } = useSBSectionStore();
 
   const [previewImage, setPreviewImage] = useState<string | undefined>();
 
@@ -41,18 +41,21 @@ const EditHeroComp = ({
 
     const imgData = data.img_url;
 
-    const imgUrl = await storeImg(imgData, "hero_img")
+    // const imgUrl = await storeImg(imgData, "hero_img")
+    const imgUrl = await storeImg(imgData, imgTag)
 
     // if (imgUrl) {
 
     const updatedData = { ...data, img_url: imgUrl };
 
-    await SBsetData("hero_section", updatedData);
+    // await SBsetData("hero_section", updatedData);
+    await SBsetData(sectionTag, updatedData);
     // useSBSectionStore.setState({
     //   SBData: updatedData
     // })
-    await SBgetData("hero_section");
-    setModalState(false);
+    window.location.reload();
+    // await SBgetData("hero_section");
+    // setModalState(false);
     // }
   };
 
@@ -68,13 +71,15 @@ const EditHeroComp = ({
     }
   };
 
+  console.log("initValue", initValue)
+
   return (
     <Dialog open={modalState} onOpenChange={setModalState}>
       <DialogTrigger>Edit</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <span className="text-2xl font-bold mb-5">Edit Hero Section</span>
+            <span className="text-2xl font-bold mb-5">{title}</span>
           </DialogTitle>
         </DialogHeader>
 
