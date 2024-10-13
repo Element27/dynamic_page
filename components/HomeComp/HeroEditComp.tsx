@@ -10,6 +10,7 @@ import useSBSectionStore, { SBDataInterface } from "@/store/supabaseStore";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 // import { supabase } from "@/utils/supabaseClient";
 import { storeImg } from "@/utils/utils";
+// import useSectionStore from "@/store/store";
 
 const EditHeroComp = ({
   modalState,
@@ -20,9 +21,9 @@ const EditHeroComp = ({
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
   initValue: SBDataInterface;
 }) => {
-  const { SBsetData } = useSBSectionStore();
+  const { SBsetData, SBgetData } = useSBSectionStore();
 
-  const [previewImage, setPreviewImage] = useState<string | undefined>(initValue?.img_url);
+  const [previewImage, setPreviewImage] = useState<string | undefined>();
 
   const form = useForm<SBDataInterface>({
     resolver: zodResolver(heroSchema),
@@ -47,7 +48,10 @@ const EditHeroComp = ({
     const updatedData = { ...data, img_url: imgUrl };
 
     await SBsetData("hero_section", updatedData);
-
+    // useSBSectionStore.setState({
+    //   SBData: updatedData
+    // })
+    await SBgetData("hero_section");
     setModalState(false);
     // }
   };

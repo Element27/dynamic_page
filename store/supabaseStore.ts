@@ -5,11 +5,11 @@ export interface SBDataInterface {
   title: string;
   desc: string;
   btn_text: string;
-  img_url?: string;
+  img_url?: string | File;
 }
 
 interface SBsectionStore {
-  SBData: SBDataInterface;
+  SBData?: SBDataInterface | null;
   SBsetData: (key: string, data: SBDataInterface) => Promise<void>;
   SBgetData: (key: string) => Promise<SBDataInterface | null>;
 }
