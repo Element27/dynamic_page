@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 // import useSectionStore, { heroData } from "@/store/store"; // Import the store
 import EditHeroComp from "./HeroEditComp";
 import useSBSectionStore, { SBDataInterface } from "@/store/supabaseStore";
-// import Image from "next/image";
-// import Image from "next/image";
+import { usePathname } from 'next/navigation';
+// import { useRouter } from 'next/router'
 
 export default function HeroMainComp() {
   // const { getHeroData } = useSectionStore();
@@ -17,8 +17,13 @@ export default function HeroMainComp() {
     img_url: "",
   });
   const [modalState, setModalState] = useState<boolean>(false);
+  // const [previewState, setPreviewState] = useState<boolean>(false)
   const [bgImg, setBgImg] = useState<string>("");
 
+
+  const pathname = usePathname();
+
+  console.log(pathname)
   // Fetch hero data on mount and when modal state changes
   useEffect(() => {
     const fetchHeroData = async () => {
@@ -80,9 +85,9 @@ export default function HeroMainComp() {
             </div>
           </div>
         </div>
-        <div className="absolute top-4 right-4 bg-blue-500 py-2 px-5 rounded-lg">
+        {pathname === "/edit" && <div className="absolute top-4 right-4 bg-blue-500 py-2 px-5 rounded-lg">
           <EditHeroComp modalState={modalState} setModalState={setModalState} initValue={heroData} imgTag="hero_img" sectionTag="hero_section" title="Edit Hero Section" />
-        </div>
+        </div>}
       </section>
       : <div className="min-h-screen w-screen flex items-center justify-center">loading...</div>
     }

@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react'
 // import { Product1Edit } from './Product1Edit'
 import useSBSectionStore, { SBDataInterface } from '@/store/supabaseStore'
 import EditHeroComp from './HeroEditComp'
+import { usePathname } from 'next/navigation'
 
 export default function CTAView() {
-
+  const pathname = usePathname();
   const { SBgetData, loading } = useSBSectionStore();
   const [ctaData, setProductData] = useState<SBDataInterface>({
     title: "",
@@ -67,10 +68,10 @@ export default function CTAView() {
           </div>
         </div>
 
-        <div className="absolute top-4 right-4 bg-blue-500 py-2 px-5 rounded-lg">
+        {pathname === '/edit' && <div className="absolute top-4 right-4 bg-blue-500 py-2 px-5 rounded-lg">
           <EditHeroComp modalState={modalState} initValue={ctaData}
             setModalState={setModalState} imgTag='cta_img' sectionTag='cta_section' title='Call To Action Section' />
-        </div>
+        </div>}
       </div>
       :
       <div className="min-h-screen w-screen flex items-center justify-center">loading...</div>

@@ -25,6 +25,7 @@ const EditHeroComp = ({
 
   const [previewImage, setPreviewImage] = useState<string | undefined>();
 
+
   const form = useForm<SBDataInterface>({
     resolver: zodResolver(heroSchema),
     defaultValues: { ...initValue },
