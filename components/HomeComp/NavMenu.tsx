@@ -73,8 +73,7 @@ export default function NavMenu() {
             className='relative h-28 w-auto min-w-28 bg-contain bg-center bg-no-repeat'
             style={{ backgroundImage: `url(${bgImg ? bgImg : "/assets/dorcas-logo.png"})` }}
           />
-          {/* <Image
-          src="/assets/dorcas-main-logo.png" alt="logo" width={100} height={50} /> */}
+
           <ul className="flex gap-10 items-center justify-between text-sm">
             <Link href="#product1">{navData?.title ? navData.title : "Product One"}</Link>
             <Link href="#product2">{navData.desc ? navData.desc : "Product Two"}</Link>
@@ -87,8 +86,6 @@ export default function NavMenu() {
             className='relative h-14 w-auto min-w-14 bg-contain bg-center bg-no-repeat'
             style={{ backgroundImage: `url(${bgImg ? bgImg : "/assets/dorcas-logo.png"})` }}
           />
-          {/* <Image
-          src="/assets/dorcas-logo.png" alt="logo" width={50} height={50} /> */}
 
           <Sheet>
             <SheetTrigger><Menu /></SheetTrigger>
@@ -100,9 +97,9 @@ export default function NavMenu() {
               </SheetHeader>
 
               <div className='flex flex-col gap-3 items-center justify-center my-4'>
-                <Link href="#product1">{"Product One"}</Link>
-                <Link href="#product2">{"Product Two"}</Link>
-                <Button className="border border-blue-600 bg-white text-blue-600 text-sm lg:text-base hover:bg-blue-600 hover:text-white rounded-full px-10 py-3 w-fit">Contact Us</Button>
+                <Link href="#product1">{navData?.title ? navData.title : "Product One"}</Link>
+                <Link href="#product2">{navData.desc ? navData.desc : "Product Two"}</Link>
+                <Button className="border border-blue-600 bg-white text-blue-600 text-sm lg:text-base hover:bg-blue-600 hover:text-white rounded-full px-10 py-3 w-fit">{navData.btn_text ? navData.btn_text : "Contact Us"}</Button>
               </div>
 
             </SheetContent>
