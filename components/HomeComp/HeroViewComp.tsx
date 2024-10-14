@@ -60,14 +60,6 @@ export default function HeroMainComp() {
             style={{ backgroundImage: `url(${bgImg ? bgImg : '/assets/home-assets/hero1.webp'})` }}
           >
 
-            {/* <Image
-              src={bgImg ?? ""}
-              alt=""
-              width={714}
-              height={450}
-              className=""
-            /> */}
-            {/* <div className="w-full h-full bg-black/50 absolute top-0 left-0" /> */}
 
             <div className="w-[90%] mx-auto lg:w-[50%] flex flex-col gap-10 items-center justify-center text-center px-4 relative z-10">
               <h1 className="text-3xl lg:text-7xl text-white font-bold lg:font-extrabold">

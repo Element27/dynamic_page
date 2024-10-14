@@ -15,11 +15,15 @@ import { storeImg } from "@/utils/utils";
 const EditHeroComp = ({
   modalState,
   setModalState,
-  initValue, imgTag, sectionTag, title
+  initValue,
+  imgTag,
+  sectionTag,
+  title,
+  formType,
 }: {
   modalState: boolean;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
-  initValue: SBDataInterface; imgTag: string, sectionTag: string; title: string
+  initValue: SBDataInterface; imgTag: string, sectionTag: string; title: string; formType?: string;
 }) => {
   const { SBsetData } = useSBSectionStore();
 
@@ -90,7 +94,7 @@ const EditHeroComp = ({
             <FormItem>
               <FormControl>
                 <FormInput
-                  label="Title"
+                  label={formType === 'nav' ? "Option One" : "Title"}
                   type="text"
                   name="title"
                   placeholder="Enter the title"
@@ -105,7 +109,7 @@ const EditHeroComp = ({
             <FormItem>
               <FormControl>
                 <FormInput
-                  label="Description"
+                  label={formType === 'nav' ? "Option Two" : "Description"}
                   type="text"
                   name="desc"
                   placeholder="Enter a brief description"
